@@ -11,6 +11,30 @@ class App extends Component {
     filter: ''
     
   };
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+}
+componentDidUpdate(prevProps, prevState) {
+  const nextContacts = this.state.contacts;
+    const prevContacts = prevState.contacts;
+
+    if (nextContacts !== prevContacts) {
+      console.log('Обновилось поле Contacts, записываю Contacts в хранилище');
+      localStorage.setItem('contacts', JSON.stringify(nextContacts));
+    }
+
+    // if (nextContacts.length > prevContacts.length && prevContacts.length !== 0) {
+    //   this.toggleModal();
+    // }
+}
+componentWillUnmount() {
+
+}
   
   addContact = data => {
     const contact = {
